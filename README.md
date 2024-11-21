@@ -25,30 +25,18 @@
 
 ## 1. What is KAG?
 
-KAG is a logical form-guided reasoning and retrieval framework based on [OpenSPG](https://github.com/OpenSPG/openspg) engine and LLMs. It is used to build logical reasoning and factual Q&A solutions for professional domain knowledge bases. It can effectively overcome the shortcomings of the traditional RAG vector similarity calculation model.
+KAG is a logical reasoning and Q&A framework based on the [OpenSPG](https://github.com/OpenSPG/openspg) engine and large language models, which is used to build logical reasoning and Q&A solutions for vertical domain knowledge bases.  KAG can effectively overcome the ambiguity of traditional RAG vector similarity calculation and the noise problem of GraphRAG introduced by OpenIE.  KAG supports logical reasoning and multi-hop fact Q&A, etc., and is significantly better than the current SOTA method.
 
 
 ### 1.1 Key Features
   
 The goal of KAG is to build a knowledge-enhanced LLM service framework in professional domains, supporting logical reasoning, factual Q&A, etc. KAG fully integrates the logical and factual characteristics of the KGs. Its core features include:
 
-* Knowledge and Chunk Mutual Indexing structure to integrate more complete contextual text information
-* Knowledge alignment using conceptual semantic reasoning to alleviate the noise problem caused by OpenIE
-* Schema-constrained knowledge construction to support the representation and construction of domain expert knowledge
-* Logical form-guided hybrid reasoning and retrieval to support logical reasoning and multi-hop reasoning Q&A
+- Knowledge and Chunk Mutual Indexing structure to integrate more complete contextual text information
+- Knowledge alignment using conceptual semantic reasoning to alleviate the noise problem caused by OpenIE
+- Schema-constrained knowledge construction to support the representation and construction of domain expert knowledge
+- Logical form-guided hybrid reasoning and retrieval to support logical reasoning and multi-hop reasoning Q&A
 
-KAG is significantly better than NaiveRAG, HippoRAG and other methods in multi-hop Q&A tasks. The F1 score on hotpotQA is relatively increased by 19.6%, and the F1 score on 2wiki is relatively increased by 33.5%. We have successfully applied KAG to Ant Group's professional knowledge Q&A tasks, such as e-government Q&A and e-health Q&A, and the professionalism has been significantly improved compared to the traditional RAG method.
-
-
-### 1.2 Technical Architecture
-
-![Figure 1 KAG technical architecture](./_static/images/kag-arch.png)
-
-The KAG framework includes three parts: kg-builder, kg-solver, and kag-model. This release only involves the first two parts, kag-model will be gradually open source release in the future.
-
-kg-builder implements a knowledge representation that is friendly to large-scale language models (LLM). Based on the hierarchical structure of DIKW (data, information, knowledge and wisdom), IT upgrades SPG knowledge representation ability, and is compatible with information extraction without schema constraints and professional knowledge construction with schema constraints on the same knowledge type (such as entity type and event type), it also supports the mutual index representation between the graph structure and the original text block, which supports the efficient retrieval of the reasoning question and answer stage.
-
-kg-solver uses a logical symbol-guided hybrid solving and reasoning engine that includes three types of operators: planning, reasoning, and retrieval, to transform natural language problems into a problem-solving process that combines language and symbols. In this process, each step can use different operators, such as exact match retrieval, text retrieval, numerical calculation or semantic reasoning, so as to realize the integration of four different problem solving processes: Retrieval, Knowledge Graph reasoning, language reasoning and numerical calculation.
 
 ## 2. Latest Updates
 
@@ -222,7 +210,17 @@ The way other frameworks integrate kag can be simply described as:
 
 ## 5. Technical Details
 
-### 5.1 Knowledge Representation
+### 5.1 Technical Architecture
+
+![Figure 1 KAG technical architecture](./_static/images/kag-arch.png)
+
+The KAG framework includes three parts: kg-builder, kg-solver, and kag-model. This release only involves the first two parts, kag-model will be gradually open source release in the future.
+
+kg-builder implements a knowledge representation that is friendly to large-scale language models (LLM). Based on the hierarchical structure of DIKW (data, information, knowledge and wisdom), IT upgrades SPG knowledge representation ability, and is compatible with information extraction without schema constraints and professional knowledge construction with schema constraints on the same knowledge type (such as entity type and event type), it also supports the mutual index representation between the graph structure and the original text block, which supports the efficient retrieval of the reasoning question and answer stage.
+
+kg-solver uses a logical symbol-guided hybrid solving and reasoning engine that includes three types of operators: planning, reasoning, and retrieval, to transform natural language problems into a problem-solving process that combines language and symbols. In this process, each step can use different operators, such as exact match retrieval, text retrieval, numerical calculation or semantic reasoning, so as to realize the integration of four different problem solving processes: Retrieval, Knowledge Graph reasoning, language reasoning and numerical calculation.
+
+### 5.2 Knowledge Representation
 
 In the context of private knowledge bases, unstructured data, structured information, and business expert experience often coexist. KAG references the DIKW hierarchy to upgrade SPG to a version that is friendly to LLMs. For unstructured data such as news, events, logs, and books, as well as structured data like transactions, statistics, and approvals, along with business experience and domain knowledge rules, KAG employs techniques such as layout analysis, knowledge extraction, property normalization, and semantic alignment to integrate raw business data and expert rules into a unified business knowledge graph.
 
@@ -230,21 +228,21 @@ In the context of private knowledge bases, unstructured data, structured informa
 
 This makes it compatible with schema-free information extraction and schema-constrained expertise construction on the same knowledge type (e. G., entity type, event type), and supports the cross-index representation between the graph structure and the original text block. This mutual index representation is helpful to the construction of inverted index based on graph structure, and promotes the unified representation and reasoning of logical forms.
 
-### 5.2 Mixed Reasoning Guided by Logic Forms
+### 5.3 Mixed Reasoning Guided by Logic Forms
 
 ![Logical Form Solver](./_static/images/kag-lf-solver.png)
 
 KAG proposes a logically formal guided hybrid solution and inference engine. The engine includes three types of operators: planning, reasoning, and retrieval, which transform natural language problems into problem solving processes that combine language and notation. In this process, each step can use different operators, such as exact match retrieval, text retrieval, numerical calculation or semantic reasoning, so as to realize the integration of four different problem solving processes: Retrieval, Knowledge Graph reasoning, language reasoning and numerical calculation.
 
-### 5.3 the effect of public data sets (multi-hop reasoning)
+### 5.4 the effect of public data sets (multi-hop reasoning)
 
 ![KAG Performance](./_static/images/kag-perf.webp)
 
 After optimization, we not only verified the adaptability of KAG in vertical fields, but also compared it with the existing RAG method in the multi-hop Question and Answer of general data sets. We found that it is obviously better than SOTA method, with F1 increasing by 33.5% on 2wiki and 19.6% on hotpotQA. We are continuing to refine this framework and have demonstrated its effectiveness through end-to-end experiments and ablation experiment metrics. We demonstrate the validity of this framework by means of logic-symbol-driven reasoning and conceptual alignment.
 
-### 5.4 the effect of domain knowledge scenarios (risk mining)
+### 5.5 the effect of domain knowledge scenarios (risk mining)
 
-#### 5.4.1 Definition of Expert Rules
+#### 5.5.1 Definition of Expert Rules
 
 * definition of "gambling APP" identification rules
 
@@ -291,11 +289,11 @@ After optimization, we not only verified the adaptability of KAG in vertical fie
   }
   ```
 
-#### 5.4.2 Business Data
+#### 5.5.2 Business Data
 
 ![KAG Business Data](./_static/images/kag-biz-data.png)
 
-#### 5.4.3 Reasoning Process
+#### 5.5.3 Reasoning Process
 
 ![KAG Reasoning Process](./_static/images/kag-reason.png)
 

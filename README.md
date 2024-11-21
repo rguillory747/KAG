@@ -52,8 +52,8 @@ kg-solver uses a logical symbol-guided hybrid solving and reasoning engine that 
 
 ## 2. Latest Updates
 
-- 2024-11-21 to be updated.
-- 2024-10-24 OpenSPG released v0.5, officially releasing the professional domain knowledge service framework of knowledge augmented generation (KAG).
+- 🚀 [2024-11-21] to be updated.
+- 🚀 [2024-10-24] OpenSPG released v0.5, officially releasing the professional domain knowledge service framework of knowledge augmented generation (KAG).
 
 ⭐️ Star our repository to stay up-to-date with exciting new features and improvements! Get instant notifications for new releases! 🌟
 

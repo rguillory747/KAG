@@ -42,3 +42,4 @@ openspg-knext==0.5.2.20241214
 ollama
 retry
 sympy
+networkx
